@@ -3,7 +3,7 @@ from __future__ import absolute_import, unicode_literals
 
 import celery
 from kombu import Queue, Exchange
-from ufmw import config
+from ufmw import config, celeryconfig
 
 
 def get_celery_queues():
@@ -17,5 +17,6 @@ def get_celery_queues():
 
 app = celery.Celery('ufmw', include=['ufmw.celery.tasks'],)
 app.config_from_object('celeryconfig')
+# app.config_from_object(celeryconfig)
 celery_queues = tuple(get_celery_queues())
 app.conf.update(CELERY_QUEUES=celery_queues)
